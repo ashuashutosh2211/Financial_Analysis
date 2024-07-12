@@ -5,6 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.layers import GRU
 from tensorflow.keras.utils import get_custom_objects
 import joblib
+import os
 import datetime
 import time
 import yfinance as yf
