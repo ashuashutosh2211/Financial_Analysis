@@ -25,8 +25,11 @@ def main_page():
     st.write('You can now get an idea of what is gonna be the range of  opening price of any company in just a single click.\n\n')
 
     st.write('Disclaimer : The Prediction might take upto a minute. Please be patient')
-    scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
-    # gru_model=tf.keras.models.load_model('gru_model.h5')
+    cwd = os.getcwd()
+    file_path = os.path.join(cwd, 'stock_price_predictor/scaler.pkl')
+
+    # scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
+    scaler = joblib.load(file_path)
 
     # Custom GRU layer class
     class CustomGRU(GRU):
@@ -36,19 +39,27 @@ def main_page():
 
     get_custom_objects().update({'GRU': CustomGRU})
 
-    model_path = r'stock_price_predictor\gru_model.h5'
+    # model_path = r'stock_price_predictor\gru_model.h5'
+    cwd = os.getcwd()
+
+    model_path = os.path.join(cwd , 'stock_price_predictor\gru_model.h5')
     gru_model = tf.keras.models.load_model(model_path, custom_objects={'GRU': CustomGRU})
 
-
+   
+    # Load company data
+    company_path = os.path.join(cwd , 'stock_price_predictor\company')
+    companyDict=joblib.load(company_path )
+    company_name = st.selectbox("Select Company", list(companyDict.keys()))
+    company_ticker = companyDict[company_name]
 
     def inverse(a,b):
         m1=b.min()
         m2=b.max()
         return a*(m2-m1)+m1
 
-    companyDict=joblib.load(r'stock_price_predictor\company')
-    company_name=st.selectbox("Enter Company Name",list(companyDict.keys()))
-    company_ticker=companyDict[company_name]
+    # companyDict=joblib.load(r'stock_price_predictor\company')
+    # company_name=st.selectbox("Enter Company Name",list(companyDict.keys()))
+    # company_ticker=companyDict[company_name]
 
 
     def predict():

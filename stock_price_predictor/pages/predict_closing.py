@@ -10,6 +10,7 @@ from tensorflow.keras.layers import GRU
 from tensorflow.keras.utils import get_custom_objects
 from streamlit_lottie import st_lottie
 import requests
+import os 
 
 def main_page():
     # Set Streamlit page configuration
@@ -36,9 +37,11 @@ def main_page():
     # Display title and description
     st.title('Predict Stock Price of any Company')
     st.write('You can now know the closing price of any Company on the next day! You are just 1 click away!')
+    cwd = os.getcwd()
+    file_path = os.path.join(cwd, 'stock_price_predictor/scaler.pkl')
 
-    # Load scaler and model
-    scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
+    # scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
+    scaler = joblib.load(file_path)
 
     # Custom GRU layer class
     class CustomGRU(GRU):
@@ -48,19 +51,25 @@ def main_page():
 
     get_custom_objects().update({'GRU': CustomGRU})
 
-    model_path = r'stock_price_predictor\gru_model.h5'
+    # model_path = r'stock_price_predictor\gru_model.h5'
+    cwd = os.getcwd()
+
+    model_path = os.path.join(cwd , 'stock_price_predictor\gru_model.h5')
     gru_model = tf.keras.models.load_model(model_path, custom_objects={'GRU': CustomGRU})
 
-    # Inverse transformation function
+   
+    # Load company data
+    company_path = os.path.join(cwd , 'stock_price_predictor\company')
+    companyDict=joblib.load(company_path )
+    company_name = st.selectbox("Select Company", list(companyDict.keys()))
+    company_ticker = companyDict[company_name]
+
+     # Inverse transformation function
     def inverse(a, b):
         m1 = b.min()
         m2 = b.max()
         return a * (m2 - m1) + m1
 
-    # Load company data
-    companyDict=joblib.load(r'stock_price_predictor\company')
-    company_name = st.selectbox("Select Company", list(companyDict.keys()))
-    company_ticker = companyDict[company_name]
 
     # Function to predict stock price
     def predict():
