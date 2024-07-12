@@ -1,10 +1,12 @@
 import streamlit as st
-import app1 , app2 , app3
-def main():
+from . import app1
+from . import app2 
+from . import app3
+def main_page():
     st.title("Portfolio Optimizer")
 
     # Sidebar
-    st.sidebar.title("Navigation")
+    st.sidebar.title("Portfolioi Optimization")
     option = st.sidebar.selectbox("Go to", ["Home", "Portfolio Optimization", "Portfolio Optimization with Target Return", "Portfolio Optimization for Risk Tolerance"])
 
     if option == "Home":
@@ -48,5 +50,3 @@ def main():
         app3.main()
         # Add your risk tolerance optimization content here
 
-if __name__ == "__main__":
-    main()
