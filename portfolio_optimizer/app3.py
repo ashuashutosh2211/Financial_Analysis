@@ -9,7 +9,7 @@ def main():
     num_companies = st.number_input("Enter the number of companies", min_value=2, step=1)
 
     # Load your DataFrame from an Excel file (Replace 'path/to/your/file.xlsx' with the actual path)
-    df = pd.read_csv(r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\portfolio_optimizer\yahootickers2.csv')
+    df = pd.read_csv(r'portfolio_optimizer\yahootickers2.csv')
     df.dropna(inplace=True)  # Drop any NaN values
     df['Name'] = df['Name'].astype(str)  # Ensure 'Name' column is treated as string
     df = df[df['Name'].str[0].str.isalpha()]

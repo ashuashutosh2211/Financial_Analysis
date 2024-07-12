@@ -25,7 +25,7 @@ def main_page():
     st.write('You can now get an idea of what is gonna be the range of  opening price of any company in just a single click.\n\n')
 
     st.write('Disclaimer : The Prediction might take upto a minute. Please be patient')
-    scaler=joblib.load(r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\scaler.pkl')
+    scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
     # gru_model=tf.keras.models.load_model('gru_model.h5')
 
     # Custom GRU layer class
@@ -36,7 +36,7 @@ def main_page():
 
     get_custom_objects().update({'GRU': CustomGRU})
 
-    model_path = r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\gru_model.h5'
+    model_path = r'stock_price_predictor\gru_model.h5'
     gru_model = tf.keras.models.load_model(model_path, custom_objects={'GRU': CustomGRU})
 
 
@@ -46,7 +46,7 @@ def main_page():
         m2=b.max()
         return a*(m2-m1)+m1
 
-    companyDict=joblib.load(r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\company')
+    companyDict=joblib.load(r'stock_price_predictor\company')
     company_name=st.selectbox("Enter Company Name",list(companyDict.keys()))
     company_ticker=companyDict[company_name]
 

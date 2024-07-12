@@ -38,7 +38,7 @@ def main_page():
     st.write('You can now know the closing price of any Company on the next day! You are just 1 click away!')
 
     # Load scaler and model
-    scaler = joblib.load(r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\scaler.pkl')
+    scaler=joblib.load(r'stock_price_predictor\scaler.pkl')
 
     # Custom GRU layer class
     class CustomGRU(GRU):
@@ -48,7 +48,7 @@ def main_page():
 
     get_custom_objects().update({'GRU': CustomGRU})
 
-    model_path = r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\gru_model.h5'
+    model_path = r'stock_price_predictor\gru_model.h5'
     gru_model = tf.keras.models.load_model(model_path, custom_objects={'GRU': CustomGRU})
 
     # Inverse transformation function
@@ -58,7 +58,7 @@ def main_page():
         return a * (m2 - m1) + m1
 
     # Load company data
-    companyDict = joblib.load(r'C:\Users\91860\OneDrive\Desktop\Financial_Analysis\Financial_Analysis\stock_price_predictor\company')
+    companyDict=joblib.load(r'stock_price_predictor\company')
     company_name = st.selectbox("Select Company", list(companyDict.keys()))
     company_ticker = companyDict[company_name]
 
