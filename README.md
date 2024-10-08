@@ -102,8 +102,6 @@ To price options using the Binomial and Black-Scholes models and analyze the res
 - Pandas
 - NumPy
 - Matplotlib
-- Excel
-- R
 
 ## How to Run
 1. Clone the repository:  
